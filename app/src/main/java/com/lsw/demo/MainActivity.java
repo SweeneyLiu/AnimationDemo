@@ -98,6 +98,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void setObjectAnimation(){
+        //缩放
 /*        mObjectAnimator = ObjectAnimator.ofFloat(mButton,"scaleX",1f,2f);
         mObjectAnimator.setDuration(3000);
         mObjectAnimator.setStartDelay(500);
@@ -105,7 +106,20 @@ public class MainActivity extends AppCompatActivity {
         mObjectAnimator.setRepeatMode(ValueAnimator.REVERSE);
         mObjectAnimator.start();*/
 
-        ObjectAnimator animator = ObjectAnimator.ofFloat(mButton, "alpha", 1f, 0f, 1f);
+        //透明度
+        /*ObjectAnimator animator = ObjectAnimator.ofFloat(mButton, "alpha", 1f, 0f, 1f);
+        animator.setDuration(5000);
+        animator.start();*/
+
+        //旋转
+        /*ObjectAnimator animator = ObjectAnimator.ofFloat(mButton, "rotation", 0f, 180f);
+        animator.setRepeatCount(1);
+        animator.setDuration(5000);
+        animator.start();*/
+
+        //平移
+        float curTranslationX = mButton.getTranslationX();
+        ObjectAnimator animator = ObjectAnimator.ofFloat(mButton, "translationX", curTranslationX, 300, curTranslationX);
         animator.setDuration(5000);
         animator.start();
 
