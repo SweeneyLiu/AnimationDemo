@@ -1,5 +1,7 @@
 package com.lsw.demo;
 
+import android.animation.Animator;
+import android.animation.AnimatorInflater;
 import android.animation.ValueAnimator;
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,8 +13,9 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String TAG = "MainActivity";
+    private static final String TAG = "lsw";
     private Button mButton;
+    float widthF;
     int width = 0;
     ValueAnimator valueAnimator;
 
@@ -22,16 +25,22 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mButton = (Button)findViewById(R.id.button);
+/*        Log.i(TAG, "onCreate: "+mButton.getLayoutParams().width);
         mButton.post(new Runnable() {
             @Override
             public void run() {
 //                width = mButton.getWidth();
-                width = mButton.getMeasuredWidth();
-                Log.i(TAG, "onCreate1: "+width);
-                setAnimation(width);
-            }
-        });
+//                width = mButton.getMeasuredWidth();
+//                Log.i(TAG, "onCreate1: "+width);
+//                setAnimation(width);
 
+                widthF = mButton.getMeasuredWidth();
+                Log.i(TAG, "onCreate1: "+widthF);
+                setAnimation(widthF);
+            }
+        });*/
+
+        setXMLAnimation();
 
     }
 
@@ -44,9 +53,40 @@ public class MainActivity extends AppCompatActivity {
                 int currentValue = (Integer) animator.getAnimatedValue();
                 mButton.getLayoutParams().width = currentValue;
                 mButton.requestLayout();
+                Log.i(TAG, "onAnimationUpdate: int："+currentValue);
             }
         });
         valueAnimator.start();
+    }
+
+    private void setAnimation(float width){
+        valueAnimator = ValueAnimator.ofFloat(width,width*2);
+        valueAnimator.setDuration(2000);
+        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animator) {
+                float currentValue = (Float) animator.getAnimatedValue();
+                mButton.getLayoutParams().width = (int)currentValue;
+                mButton.requestLayout();
+                Log.i(TAG, "onAnimationUpdate: float："+currentValue);
+            }
+        });
+        valueAnimator.start();
+    }
+
+    private void setXMLAnimation(){
+        final ValueAnimator animator = (ValueAnimator) AnimatorInflater.loadAnimator(this,R.animator.set_animation);
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                float currentValue = (float) animator.getAnimatedValue();
+                mButton.getLayoutParams().width = (int)currentValue;
+                mButton.requestLayout();
+                Log.i(TAG, "onAnimationUpdate: xml："+currentValue);
+            }
+        });
+        animator.setTarget(mButton);
+        animator.start();
     }
 
 }

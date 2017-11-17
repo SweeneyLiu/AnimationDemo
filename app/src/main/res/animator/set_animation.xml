@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<set xmlns:android="http://schemas.android.com/apk/res/android">
-
-</set>
+<animator xmlns:android="http://schemas.android.com/apk/res/android"
+          android:valueFrom="100"
+          android:valueTo="400"
+          android:valueType="floatType"
+          android:startOffset ="1000"
+          android:fillBefore = "true"
+          android:fillAfter = "false"
+          android:fillEnabled= "true"
+          android:repeatMode="restart"
+          android:duration="3000"/>
