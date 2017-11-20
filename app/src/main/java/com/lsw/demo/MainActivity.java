@@ -16,10 +16,12 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "lsw";
     private Button mButton;
+    private ColorChangeView mColorChangeView;
     float widthF;
     int width = 0;
     ValueAnimator valueAnimator;
     ObjectAnimator mObjectAnimator;
+    private ViewWrapper wrapper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mButton = (Button)findViewById(R.id.button);
+        mColorChangeView = (ColorChangeView)findViewById(R.id.colorView);
 /*        Log.i(TAG, "onCreate: "+mButton.getLayoutParams().width);
         mButton.post(new Runnable() {
             @Override
@@ -44,11 +47,35 @@ public class MainActivity extends AppCompatActivity {
 
 //        setXMLAnimation();
 
-        setObjectAnimation();
+//        setObjectAnimation();
 
 //        setXMLObjectAnimation();
 
+//        setColorViewAnimation();
 
+        // 创建包装类,并传入动画作用的对象
+        wrapper = new ViewWrapper(mButton);
+
+        mButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ObjectAnimator.ofInt(wrapper, "width", 500).setDuration(3000).start();
+                // 设置动画的对象是包装类的对象
+            }
+        });
+
+    }
+
+    private void setColorViewAnimation() {
+        ObjectAnimator anim = ObjectAnimator.ofObject(mColorChangeView, "color", new ColorEvaluator(), "#0000FF", "#00FF00");
+        // 设置自定义View对象、背景颜色属性值 & 颜色估值器
+        // 本质逻辑：
+        // 步骤1：根据颜色估值器不断 改变 值
+        // 步骤2：调用set（）设置背景颜色的属性值（实际上是通过画笔进行颜色设置）
+        // 步骤3：调用invalidate()刷新视图，即调用onDraw（）重新绘制，从而实现动画效果
+
+        anim.setDuration(8000);
+        anim.start();
     }
 
     private void setAnimation(int width){
@@ -130,6 +157,29 @@ public class MainActivity extends AppCompatActivity {
         Animator animator = AnimatorInflater.loadAnimator(this, R.animator.set_animation2);
         animator.setTarget(mButton);
         animator.start();
+    }
+
+
+    // 提供ViewWrapper类,用于包装View对象
+    // 本例:包装Button对象
+    private static class ViewWrapper {
+        private View mTarget;
+
+        // 构造方法:传入需要包装的对象
+        public ViewWrapper(View target) {
+            mTarget = target;
+        }
+
+        // 为宽度设置get（） & set（）
+        public int getWidth() {
+            return mTarget.getLayoutParams().width;
+        }
+
+        public void setWidth(int width) {
+            mTarget.getLayoutParams().width = width;
+            mTarget.requestLayout();
+        }
+
     }
 
 }
