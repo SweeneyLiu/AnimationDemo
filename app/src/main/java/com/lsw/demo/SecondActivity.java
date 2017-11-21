@@ -1,5 +1,6 @@
 package com.lsw.demo;
 
+import android.animation.ObjectAnimator;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -21,6 +22,10 @@ public class SecondActivity extends AppCompatActivity {
         questionLayout1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //实现每次都从开始位置运行动画
+/*                ObjectAnimator animator = ObjectAnimator.ofFloat(openClose1,"rotationX",0,180);
+                animator.start();*/
+
                 if (question1.getVisibility() == View.GONE) {
                     openClose1.setRotationX(180);
 //                    openClose1.animate().rotationX(180);
