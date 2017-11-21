@@ -13,6 +13,13 @@
         android:text="Hello"
         android:layout_centerInParent="true"/>
 
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="跳转"
+        android:layout_centerHorizontal="true"/>
+
     <com.lsw.demo.PointView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>

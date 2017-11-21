@@ -6,6 +6,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "lsw";
     private Button mButton;
+    private Button button2;
     private ColorChangeView mColorChangeView;
     float widthF;
     int width = 0;
@@ -32,6 +34,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mButton = (Button)findViewById(R.id.button);
+        button2 = (Button)findViewById(R.id.button2);
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setClass(MainActivity.this,SecondActivity.class);
+                startActivity(intent);
+            }
+        });
         mColorChangeView = (ColorChangeView)findViewById(R.id.colorView);
 /*        Log.i(TAG, "onCreate: "+mButton.getLayoutParams().width);
         mButton.post(new Runnable() {
